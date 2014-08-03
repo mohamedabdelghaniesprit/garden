@@ -20,7 +20,7 @@ class Branch(MPTTModel):
 
     class Meta:
         verbose_name = 'Branch'
-        verbose_name_plural = 'Branches'
+        verbose_name_plural = 'All Branches'
 
     def __unicode__(self):
         return self.title
