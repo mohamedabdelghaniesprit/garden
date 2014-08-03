@@ -1,0 +1,4 @@
+django>=16,<1.7
+south
+django-extensions
+feincms
