@@ -2,3 +2,4 @@
 *.sublime-*
 *.ipynb
 garden/settings.py
+static/
