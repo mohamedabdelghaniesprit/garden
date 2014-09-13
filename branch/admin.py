@@ -18,7 +18,9 @@ class ProxyBranch(Branch):
         proxy = True
 
 
-class ProxyBranchAdmin(BranchAdmin):
+class ProxyBranchAdmin(tree_editor.TreeEditor):
+    list_display = ('title',)
+
     def queryset(self, request):
         return self.model.objects.actual_list()
 
