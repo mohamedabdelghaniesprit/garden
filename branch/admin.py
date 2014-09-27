@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib import admin
 from feincms.admin import tree_editor
 from django.contrib.auth.models import User
@@ -7,8 +8,26 @@ from feincms.module.medialibrary.models import Category, MediaFile
 from .models import Branch
 
 
+class BranchForm(forms.ModelForm):
+    class Meta:
+        model = Branch
+
+
+class ActualBranchForm(BranchForm):
+    def __init__(self, *args, **kwargs):
+        super(ActualBranchForm, self).__init__(*args, **kwargs)
+        self.fields['parent'].queryset = Branch.objects.actual_list()
+
+
 class BranchAdmin(tree_editor.TreeEditor):
-    list_display = ('title', 'is_done',)
+    list_display = ('title', 'is_description', 'is_done',)
+    form = BranchForm
+
+    def is_description(self, branch):
+        res = True if branch.description else False
+        return res
+    is_description.boolean = True
+    is_description.short_description = 'Description'
 
 
 class ProxyBranch(Branch):
@@ -19,10 +38,17 @@ class ProxyBranch(Branch):
 
 
 class ProxyBranchAdmin(tree_editor.TreeEditor):
-    list_display = ('title',)
+    list_display = ('title', 'is_description',)
+    form = ActualBranchForm
 
     def queryset(self, request):
         return self.model.objects.actual_list()
+
+    def is_description(self, branch):
+        res = True if branch.description else False
+        return res
+    is_description.boolean = True
+    is_description.short_description = 'Description'
 
 
 admin.site.register(ProxyBranch, ProxyBranchAdmin)
