@@ -24,10 +24,10 @@ class BranchAdmin(tree_editor.TreeEditor):
     form = BranchForm
 
     def is_description(self, branch):
-        res = True if branch.description else False
+        res = bool(branch.description or branch.qq)
         return res
     is_description.boolean = True
-    is_description.short_description = 'Description'
+    is_description.short_description = 'Description/QQ'
 
 
 class ProxyBranch(Branch):
@@ -45,10 +45,10 @@ class ProxyBranchAdmin(tree_editor.TreeEditor):
         return self.model.objects.actual_list()
 
     def is_description(self, branch):
-        res = True if branch.description else False
+        res = bool(branch.description or branch.qq)
         return res
     is_description.boolean = True
-    is_description.short_description = 'Description'
+    is_description.short_description = 'Description/QQ'
 
 
 admin.site.register(ProxyBranch, ProxyBranchAdmin)
