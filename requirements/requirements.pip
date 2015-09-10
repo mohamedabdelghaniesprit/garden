@@ -1,4 +1,6 @@
-django>=16,<1.7
+django>=1.6,<1.7
 south
 django-extensions
+Werkzeug
 feincms
+psycopg2
